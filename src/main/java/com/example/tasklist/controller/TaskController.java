@@ -31,6 +31,7 @@ public class TaskController {
     @Autowired
     private MessageSource messageSource;
 
+    @CrossOrigin
     @PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> create(@RequestBody Task task) {
         try {
