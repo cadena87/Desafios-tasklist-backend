@@ -19,8 +19,8 @@ public class TasklistApplication {
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
+        config.addAllowedOrigin("https://app-tasklist-supero.herokuapp.com");
+        config.addAllowedHeader("https://app-tasklist-supero.herokuapp.com");
         config.addAllowedMethod("OPTIONS");
         config.addAllowedMethod("HEAD");
         config.addAllowedMethod("GET");
