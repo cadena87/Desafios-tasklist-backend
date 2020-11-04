@@ -23,7 +23,7 @@ import java.util.Locale;
 @Slf4j
 @RequiredArgsConstructor
 @Api(value = "Task", description = "Api de gerenciamento de Tarefas")
-@CrossOrigin(value = {"https://cadena87.github.io/Desafios-tasklist-frontend/"})
+@CrossOrigin(value = {"https://app-tasklist-supero.herokuapp.com", "https://cadena87.github.io/Desafios-tasklist-frontend"})
 public class TaskController {
 
     @Autowired
@@ -31,6 +31,7 @@ public class TaskController {
     @Autowired
     private MessageSource messageSource;
 
+    @CrossOrigin(value = {"https://app-tasklist-supero.herokuapp.com", "https://cadena87.github.io/Desafios-tasklist-frontend"})
     @PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> create(@RequestBody Task task) {
         try {
