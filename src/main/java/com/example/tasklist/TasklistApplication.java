@@ -18,7 +18,7 @@ public class TasklistApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("api/v1/task").allowedOrigins("https://ws-tasklist-api.herokuapp.com");
+                registry.addMapping("/api/v1/task").allowedOrigins("https://ws-tasklist-api.herokuapp.com");
             }
         };
     }
