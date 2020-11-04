@@ -23,6 +23,7 @@ import java.util.Locale;
 @Slf4j
 @RequiredArgsConstructor
 @Api(value = "Task", description = "Api de gerenciamento de Tarefas")
+@CrossOrigin(value = {"https://cadena87.github.io/Desafios-tasklist-frontend/"})
 public class TaskController {
 
     @Autowired
