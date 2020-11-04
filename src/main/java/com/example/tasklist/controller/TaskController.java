@@ -24,6 +24,7 @@ import java.util.Locale;
 @Slf4j
 @RequiredArgsConstructor
 @Api(value = "Task", description = "Api de gerenciamento de Tarefas")
+@CrossOrigin
 public class TaskController {
 
     @Autowired
