@@ -15,31 +15,22 @@ import org.springframework.web.filter.CorsFilter;
 @EnableWebSecurity
 public class RestConfig extends WebSecurityConfigurerAdapter {
 
-        @Bean
-        CorsFilter corsFilter() {
-            CorsFilter filter = new CorsFilter();
-            return filter;
-        }
+    @Bean
+    CorsFilter corsFilter() {
+        CorsFilter filter = new CorsFilter();
+        return filter;
+    }
 
-        protected void configure(HttpSecurity http) throws Exception {
-            (
-                (HttpSecurity)
-                    (
-                        (HttpSecurity)
-                            (
-                                (ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)
-                                    http
-                                        .headers().addHeaderWriter(
-                                        new StaticHeadersWriter("Access-Control-Allow-Origin", "*")).and()
-                                        .addFilterBefore(corsFilter(), SessionManagementFilter.class)
-                                        .csrf().disable()
-                                        .authorizeRequests()
-                                        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                                        .anyRequest()
+    protected void configure(HttpSecurity http) throws Exception {
 
-                            ).authenticated().and()
-                    ).formLogin().and()
-            ).httpBasic();
-        }
-        }
+        http
+            .headers().addHeaderWriter(
+            new StaticHeadersWriter("Access-Control-Allow-Origin", "*")).and()
+            .addFilterBefore(corsFilter(), SessionManagementFilter.class)
+            .csrf().disable()
+            .authorizeRequests()
+            .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+            .anyRequest()
+             .permitAll();
+    }
 }
