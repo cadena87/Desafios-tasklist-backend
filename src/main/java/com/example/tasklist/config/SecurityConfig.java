@@ -13,19 +13,20 @@ import java.util.Collections;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(final HttpSecurity http) throws Exception {
         http
-                .cors()
-                .configurationSource(new PermissiveCorsConfigurationSource())
-                .and()
-                .csrf().disable()
-                .authorizeRequests()
-                .antMatchers("**").permitAll();
+            .cors()
+            .configurationSource(new PermissiveCorsConfigurationSource())
+            .and()
+            .csrf()
+            .disable()
+            .authorizeRequests()
+            .antMatchers("**").permitAll();
     }
 
     private static class PermissiveCorsConfigurationSource implements CorsConfigurationSource {
         @Override
         public CorsConfiguration getCorsConfiguration(final HttpServletRequest request) {
             final CorsConfiguration configuration = new CorsConfiguration();
-            configuration.setAllowCredentials(true);
+            configuration.setAllowCredentials(false);
             configuration.setAllowedHeaders(Collections.singletonList("*"));
             configuration.setAllowedMethods(Collections.singletonList("*"));
             configuration.setAllowedOrigins(Collections.singletonList("*"));
