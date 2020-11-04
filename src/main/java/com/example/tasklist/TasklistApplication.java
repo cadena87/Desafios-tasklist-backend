@@ -23,8 +23,8 @@ public class TasklistApplication {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         final CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(Collections.singletonList("https://ws-tasklist-api.herokuapp.com"));
-        config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept"));
+        config.setAllowedOrigins(Collections.singletonList("https://ws-tasklist-api.herokuapp.com/"));
+        config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Access-Control-Allow-Origin"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
         source.registerCorsConfiguration("/**", config);
         FilterRegistrationBean registration = new FilterRegistrationBean(new CorsFilter(source));
