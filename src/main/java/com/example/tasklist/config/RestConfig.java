@@ -1,40 +1,45 @@
 package com.example.tasklist.config;
 
-import java.io.IOException;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
+import org.springframework.security.web.session.SessionManagementFilter;
+import org.springframework.web.filter.CorsFilter;
 
-@Component
-public class RestConfig implements Filter {
+@Configuration
+@EnableWebSecurity
+public class RestConfig extends WebSecurityConfigurerAdapter {
 
-    @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        HttpServletResponse response = (HttpServletResponse) res;
-        HttpServletRequest request =  (HttpServletRequest) req;
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE, PATCH");
-        response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept,Authorization");
-        response.setHeader("Access-Control-Expose-Headers", "Location");
-
-        if("OPTIONS".equalsIgnoreCase(request.getMethod())) {
-            response.setStatus(HttpServletResponse.SC_OK);
-
-        } else {
-            chain.doFilter(req, res);
+        @Bean
+        CorsFilter corsFilter() {
+            CorsFilter filter = new CorsFilter();
+            return filter;
         }
-    }
-    @Override
-    public void init(FilterConfig filterConfig) {}
 
-    @Override
-    public void destroy() {}
+        protected void configure(HttpSecurity http) throws Exception {
+            (
+                (HttpSecurity)
+                    (
+                        (HttpSecurity)
+                            (
+                                (ExpressionUrlAuthorizationConfigurer.AuthorizedUrl)
+                                    http
+                                        .headers().addHeaderWriter(
+                                        new StaticHeadersWriter("Access-Control-Allow-Origin", "*")).and()
+                                        .addFilterBefore(corsFilter(), SessionManagementFilter.class)
+                                        .csrf().disable()
+                                        .authorizeRequests()
+                                        .antMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                                        .anyRequest()
+
+                            ).authenticated().and()
+                    ).formLogin().and()
+            ).httpBasic();
+        }
+        }
 }
