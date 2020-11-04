@@ -24,6 +24,7 @@ import java.util.Locale;
 @Slf4j
 @RequiredArgsConstructor
 @Api(value = "Task", description = "Api de gerenciamento de Tarefas")
+@CrossOrigin
 public class TaskController {
 
     @Autowired
@@ -31,6 +32,7 @@ public class TaskController {
     @Autowired
     private MessageSource messageSource;
 
+    @CrossOrigin
     @PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> create(@RequestBody Task task) {
         try {
