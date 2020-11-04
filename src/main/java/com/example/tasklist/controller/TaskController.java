@@ -33,7 +33,7 @@ public class TaskController {
     @Autowired
     private MessageSource messageSource;
 
-    @RequestMapping(value= "/api/v1/task/**", method=RequestMethod.OPTIONS)
+    @RequestMapping(value= "/api/v1/task", method=RequestMethod.OPTIONS)
     public void corsHeaders(HttpServletResponse response) {
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
