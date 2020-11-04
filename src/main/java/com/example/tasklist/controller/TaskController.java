@@ -31,7 +31,7 @@ public class TaskController {
     @Autowired
     private MessageSource messageSource;
 
-    @CrossOrigin
+    @CrossOrigin(origins = "https://app-tasklist-supero.herokuapp.com")
     @PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> create(@RequestBody Task task) {
         try {
