@@ -31,7 +31,6 @@ public class TaskController {
     @Autowired
     private MessageSource messageSource;
 
-    @CrossOrigin(origins = "https://app-tasklist-supero.herokuapp.com")
     @PostMapping(produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> create(@RequestBody Task task) {
         try {
@@ -44,19 +43,16 @@ public class TaskController {
         }
     }
 
-    @CrossOrigin
     @GetMapping(produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> findAll() {
         return new ResponseEntity(taskService.findAll(), HttpStatus.OK);
     }
 
-    @CrossOrigin
     @GetMapping(path = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> findId(@PathVariable Long id) {
         return new ResponseEntity(taskService.findById(id), HttpStatus.OK);
     }
 
-    @CrossOrigin
     @PutMapping(path = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Task> update(@RequestBody Task task, @PathVariable Long id) {
         try {
@@ -82,7 +78,6 @@ public class TaskController {
         }
     }
 
-    @CrossOrigin
     @DeleteMapping(path = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> delete(@PathVariable Long id) {
         try {
