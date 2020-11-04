@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url = ${CLEARDB_DATABASE_URL}
+    username = admin
+    password = @W123456
+    testWhileIdle = true
+    validationQuery = SELECT 1
+  jpa:
+    show-sql = true
+    hibernate:
+      ddl-auto = update
+      naming-strategy = org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect = org.hibernate.dialect.MySQL5Dialect
+bucket4j:
+  enabled: true
+  filters:
+    - cache-name: buckets
+      url: /*
+      rate-limits:
+        - bandwidths:
+            - capacity: 5
+              time: 10
+              unit: seconds
