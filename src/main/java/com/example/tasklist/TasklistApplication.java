@@ -26,7 +26,7 @@ public class TasklistApplication {
         config.setAllowedOrigins(Collections.singletonList("https://ws-tasklist-api.herokuapp.com/"));
         config.setAllowedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Access-Control-Allow-Origin"));
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/api/v1/**", config);
         FilterRegistrationBean registration = new FilterRegistrationBean(new CorsFilter(source));
         return registration;
     }
