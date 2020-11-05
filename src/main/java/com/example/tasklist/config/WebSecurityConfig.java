@@ -11,13 +11,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors()
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
                 .and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/v1/task").permitAll()
-                .antMatchers( HttpMethod.POST, "/api/v1/task/*").permitAll()
-                .antMatchers( HttpMethod.PUT, "/api/v1/task/*").permitAll()
-                .antMatchers( HttpMethod.DELETE, "/api/v1/task/*").permitAll()
+                .antMatchers( HttpMethod.POST, "/api/v1/task").permitAll()
+                .antMatchers( HttpMethod.PUT, "/api/v1/task").permitAll()
+                .antMatchers( HttpMethod.DELETE, "/api/v1/task").permitAll()
                 .and();
     }
 }
