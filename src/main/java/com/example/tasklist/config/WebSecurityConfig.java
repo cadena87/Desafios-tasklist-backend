@@ -16,8 +16,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/v1/task").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/v1/task").permitAll()
-                .antMatchers( HttpMethod.PUT, "/api/v1/task/*").anonymous()
-                .antMatchers( HttpMethod.DELETE, "/api/v1/task/*").anonymous()
-                .and();
+                .antMatchers( HttpMethod.PUT, "/api/v1/task/*").permitAll()
+                .antMatchers( HttpMethod.DELETE, "/api/v1/task/*").permitAll()
+                .and().cors().disable();
     }
 }
