@@ -1,36 +1,49 @@
 package com.example.tasklist.config;
 
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.filter.CorsFilter;
+
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
-public class CorsConfig {
+public class CorsConfig implements Filter {
+    String origem = "https://ws-tasklist-api.herokuapp.com";
 
-    @Bean
-    public FilterRegistrationBean corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    @Override
+    public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain)
+            throws IOException, ServletException {
 
-        CorsConfiguration configAutenticacao = new CorsConfiguration();
-        configAutenticacao.setAllowCredentials(true);
-        configAutenticacao.addAllowedOrigin("https://ws-tasklist-api.herokuapp.com");
-        configAutenticacao.addAllowedHeader("Authorization");
-        configAutenticacao.addAllowedHeader("Content-Type");
-        configAutenticacao.addAllowedHeader("Accept");
-        configAutenticacao.addAllowedMethod("POST");
-        configAutenticacao.addAllowedMethod("GET");
-        configAutenticacao.addAllowedMethod("DELETE");
-        configAutenticacao.addAllowedMethod("PUT");
-        configAutenticacao.addAllowedMethod("OPTIONS");
-        configAutenticacao.setMaxAge(3600L);
-        source.registerCorsConfiguration("/api/v1/task/**", configAutenticacao);
+        HttpServletRequest request = (HttpServletRequest) req;
+        HttpServletResponse response = (HttpServletResponse) resp;
 
-        FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
-        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
-        return bean;
+        response.setHeader("Access-Control-Allow-Origin", origem);
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+
+        if ("OPTIONS".equals(request.getMethod()) && origem.equals(request.getHeader("Origin"))) {
+            response.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
+            response.setHeader("Access-Control-Allow-Headers", "Authorization, Content-Type, Accept");
+            response.setHeader("Access-Control-Max-Age", "3600");
+
+            response.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            chain.doFilter(req, resp);
+        }
+
+    }
+
+    @Override
+    public void destroy() {
+    }
+
+    @Override
+    public void init(FilterConfig arg0) throws ServletException {
     }
 }
