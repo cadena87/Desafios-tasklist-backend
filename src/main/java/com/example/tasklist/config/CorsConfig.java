@@ -27,7 +27,7 @@ public class CorsConfig {
         configAutenticacao.addAllowedMethod("PUT");
         configAutenticacao.addAllowedMethod("OPTIONS");
         configAutenticacao.setMaxAge(3600L);
-        source.registerCorsConfiguration("/**", configAutenticacao);
+        source.registerCorsConfiguration("/api/v1/task/**", configAutenticacao);
 
         FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
         bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
