@@ -14,7 +14,7 @@ public class TasklistApplication {
         SpringApplication.run(TasklistApplication.class, args);
     }
 
-    @Bean
+/*    @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurerAdapter() {
             @Override
@@ -24,5 +24,5 @@ public class TasklistApplication {
 
             }
         };
-    }
+    }*/
 }

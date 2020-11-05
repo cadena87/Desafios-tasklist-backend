@@ -12,18 +12,6 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 public class WebSecurityConfig {
 
-/*    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
-                .and().csrf().disable()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/v1/task").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/task").permitAll()
-                .antMatchers( HttpMethod.PUT, "/api/v1/task/*").permitAll()
-                .antMatchers( HttpMethod.DELETE, "/api/v1/task/*").permitAll()
-                .and().cors().disable();
-    }*/
-
     @Bean
     public FilterRegistrationBean corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
