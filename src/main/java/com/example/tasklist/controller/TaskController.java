@@ -27,7 +27,7 @@ import java.util.Locale;
 @Slf4j
 @RequiredArgsConstructor
 @Api(value = "Task", description = "Api de gerenciamento de Tarefas")
-@CrossOrigin(origins = {"http://localhost:4200", "https://ws-tasklist-api.herokuapp.com"})
+//@CrossOrigin(origins = {"http://localhost:4200", "https://ws-tasklist-api.herokuapp.com"})
 public class TaskController {
 
     @Autowired
