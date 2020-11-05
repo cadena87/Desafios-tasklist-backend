@@ -1,6 +1,7 @@
 package com.example.tasklist.controller;
 
 import com.example.tasklist.entity.Task;
+import com.example.tasklist.exception.DeleteException;
 import com.example.tasklist.exception.UpdateTaskException;
 import com.example.tasklist.exception.ValidateTaskExceprion;
 import com.example.tasklist.service.TaskService;
@@ -23,6 +24,7 @@ import java.util.Locale;
 @Slf4j
 @RequiredArgsConstructor
 @Api(value = "Task", description = "Api de gerenciamento de Tarefas")
+@CrossOrigin(origins = "http://localhost:4200")
 public class TaskController {
 
     @Autowired
@@ -78,11 +80,14 @@ public class TaskController {
     }
 
     @DeleteMapping(path = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
+    public ResponseEntity<Task> delete(@PathVariable Long id) {
         try {
-            return new ResponseEntity(taskService.deleteById(id), HttpStatus.OK);
+            if (taskService.deleteById(id))
+                return new ResponseEntity(new Task(), HttpStatus.OK);
+            else
+                throw new DeleteException();
         } catch (Exception e) {
-            return new ResponseEntity(Boolean.FALSE, HttpStatus.NOT_FOUND);
+            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
         }
     }
 }
