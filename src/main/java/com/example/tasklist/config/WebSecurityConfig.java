@@ -12,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
+/*
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues())
@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers( HttpMethod.PUT, "/api/v1/task").permitAll()
                 .antMatchers( HttpMethod.DELETE, "/api/v1/task").permitAll()
                 .and();
-    }
+    }*/
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
