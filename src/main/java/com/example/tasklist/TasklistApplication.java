@@ -19,7 +19,7 @@ public class TasklistApplication {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/v1/task/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
+                registry.addMapping("/api/v1/task").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
 
 
             }
