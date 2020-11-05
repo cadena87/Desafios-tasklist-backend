@@ -6,6 +6,7 @@ import com.example.tasklist.exception.UpdateTaskException;
 import com.example.tasklist.exception.ValidateTaskExceprion;
 import com.example.tasklist.service.TaskService;
 import com.example.tasklist.util.MergeObject;
+import com.example.tasklist.util.TaskStatus;
 import com.example.tasklist.util.ValidateTask;
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.Locale;
 
 
@@ -24,7 +27,7 @@ import java.util.Locale;
 @Slf4j
 @RequiredArgsConstructor
 @Api(value = "Task", description = "Api de gerenciamento de Tarefas")
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = {"http://localhost:4200", "https://ws-tasklist-api.herokuapp.com"})
 public class TaskController {
 
     @Autowired
@@ -63,6 +66,12 @@ public class TaskController {
             Task task_ = taskService.findById(id)
                     .map(task_dataBase -> {
 
+                        if (task.getStatus().equals(TaskStatus.FINALIZADO)) {
+                            task.setDataConclusao(new Date());
+                        } else {
+                            task.setDataConclusao(null);
+                        }
+
                         taskService.save(new MergeObject<>(task, task_dataBase).merge());
 
                         return task_dataBase;
@@ -80,14 +89,11 @@ public class TaskController {
     }
 
     @DeleteMapping(path = "/{id}", produces=MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Task> delete(@PathVariable Long id) {
+    public ResponseEntity<Boolean> delete(@PathVariable Long id) {
         try {
-            if (taskService.deleteById(id))
-                return new ResponseEntity(new Task(), HttpStatus.OK);
-            else
-                throw new DeleteException();
+            return new ResponseEntity(taskService.deleteById(id), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity(null, HttpStatus.NOT_FOUND);
+            return new ResponseEntity(Boolean.FALSE, HttpStatus.NOT_FOUND);
         }
     }
 }
